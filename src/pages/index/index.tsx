@@ -61,7 +61,7 @@ function index() {
             <CommonSearchBar/>
           </div>
         </div>
-        <div className={styles.page__contents_imageBox}>{cardList}</div>
+        <div className={styles.page__contents__imageBox}>{cardList}</div>
       </div>
 
       {/* 공통 푸터 UI 부분 */}
