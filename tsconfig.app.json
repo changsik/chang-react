@@ -30,6 +30,7 @@
       "@pages/*": ["src/pages/*"],
       "@types/*": ["src/types/*"],
       "@apis/*": ["src/apis/*"],
+      "@config/*": ["src/config/*"],
       "@recoil/*": ["src/recoil/*"],
     },
     "noImplicitAny": false,

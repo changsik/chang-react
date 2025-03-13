@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 // import AboutPage from "@pages/about"
 
 import MainPage from "@pages/index/index"
+import FirebaseAuth from "@/pages/auth/FirebaseAuth"
 
 function App() {
   // return  <BrowserRouter>
@@ -15,6 +16,7 @@ function App() {
   <BrowserRouter>
     <Routes>
       <Route index path="/" element={<MainPage/>}></Route>
+      <Route index path="/firebase" element={<FirebaseAuth/>}></Route>
     </Routes>
   </BrowserRouter>
   )
