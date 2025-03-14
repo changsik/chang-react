@@ -8,8 +8,11 @@ import Card from "./components/Card"
 import styles from "./styles/index.module.scss"
 import axios from "axios"
 import { CardDTO } from "./types/Card"
+import { useRecoilValue } from "recoil"
+import { imageData } from "@recoil/selectors/imageSelector"
 
 function index() {
+  //const imageSelector = useRecoilValue (imageData)
   const [imgUrls, setImgUrls] = useState([])
 
   const getData = async () => {
