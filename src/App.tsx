@@ -19,6 +19,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index path="/" element={<MainPage/>}></Route>
+          <Route path="/search/:id" element={<MainPage/>}></Route>
           <Route index path="/firebase" element={<FirebaseAuth/>}></Route>
         </Routes>
       </BrowserRouter>    
