@@ -1,5 +1,12 @@
+import { useEffect, useState } from 'react';
 import styles from './DetailDialog.module.scss';
 import { CardDTO, Tag } from '@/pages/index/types/Card';
+import toast, {toastConfig} from 'react-simple-toasts';
+import 'react-simple-toasts/dist/theme/dark.css';
+
+toastConfig({
+    theme: 'dark'
+})
 
 interface Props {
     data:CardDTO
@@ -7,9 +14,45 @@ interface Props {
 }
 
 const DetailDialog  = ({ data, handleDialog }:Props ) => {
+
+    const [bookmark, setBookmark] = useState(false);
+
+
+    // 다이얼로그 닫기
     const closeDialog = () => {
         handleDialog(false)
     }
+
+    // 북마크 추가
+    const addBookmark = (selected:CardDTO) => {
+        setBookmark(true);    
+
+        const getLocalStorage = JSON.parse(localStorage.getItem('bookmark'));
+        if(!getLocalStorage || getLocalStorage === null) {
+            console.log('북마크가 없습니다.')
+            localStorage.setItem('bookmark', JSON.stringify([selected]))
+            toast('해당 이미지를 북마크에 저장하였습니다. 😊')
+        } else {
+            if(getLocalStorage.findIndex((item:CardDTO)=> item.id === selected.id ) > -1){
+                console.log('북마크에 이미 존재합니다.')
+                toast('북마크에 이미 존재하는 이미지입니다. 😒')
+            } else {
+                const res = [...getLocalStorage]
+                res.push(selected) 
+                localStorage.setItem('bookmark', JSON.stringify(res))
+                toast('해당 이미지를 북마크에 저장하였습니다. 😊')
+            }   
+        }
+    }
+
+    useEffect(() => {
+        const getLocalStorage = JSON.parse(localStorage.getItem('bookmark'));
+        if(getLocalStorage && getLocalStorage.findIndex((item:CardDTO)=> item.id === data.id ) > -1) {
+            setBookmark(true)
+        } else if(!getLocalStorage) return
+    }, [data.id])
+
+
     return (
         <div className={styles.container}>
             <div className={styles.container__dialog}>
@@ -23,9 +66,11 @@ const DetailDialog  = ({ data, handleDialog }:Props ) => {
                         <span className={styles.close__authorName}>{data.user.name}</span>
                     </div>
                     <div className={styles.bookmark}>
-                        <button className={styles.bookmark__button}>
+                        <button className={styles.bookmark__button} onClick={() => addBookmark(data)}>
                             {/* 구글 아이콘 사용 */}
-                            <span className="material-symbols-outlined" style={{fontSize:16 + 'px'}}>북마크</span>  
+                            {bookmark === false ? <span className="material-symbols-outlined" style={{fontSize:16 + 'px'}}>북마크</span> 
+                                                : <span className="material-symbols-outlined" style={{fontSize:16 + 'px', color:'red'}}>북마크</span>}
+                             
                         </button>
                         <button className={styles.bookmark__button}>다운로드</button>
                     </div>
