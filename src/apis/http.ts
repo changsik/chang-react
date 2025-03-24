@@ -1,0 +1,33 @@
+import axios from "axios";
+
+const apiClient = axios.create({
+    baseURL: import.meta.env.VITE_API_URL,
+    timeout: 30000,
+    headers: { // 요청 헤더
+        'Content-Type': 'application/json',  
+        Authorization: `Bearer ${localStorage.getItem('token')}` //`Client-ID ${process.env.REACT_APP_UNSPLASH_ACCESS_KEY}` 
+    }
+});
+
+apiClient.interceptors.request.use(
+    (config) => {
+        //config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+        return config;
+    },  
+    (error) => {
+        console.error('Request error:', error);
+        return Promise.reject(error);
+    }
+);
+
+apiClient.interceptors.response.use(
+    (response) => {
+        return response;
+    },
+    (error) => {
+        console.error('Response error:', error);
+        return Promise.reject(error);
+    }
+);
+
+export default apiClient;

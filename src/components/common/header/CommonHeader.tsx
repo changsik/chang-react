@@ -8,6 +8,10 @@ function CommonHeader() {
         navigate('/bookmark')
     }
 
+    const moveToSignIn = () => {
+        navigate('/sign-in')
+    }
+
     return (
         <header className={styles.header}>
             <div className={styles.header__logoBox}>
@@ -15,7 +19,7 @@ function CommonHeader() {
                 <span className={styles.header__logoBox__title}>PhotoSplash</span>
             </div>
             <div className={styles.header__profileBox}>
-                <button className={styles.header__profileBox__button}>회원가입</button>
+                <button className={styles.header__profileBox__button} onClick={moveToSignIn} >로그인</button>
                 <button className={styles.header__profileBox__button}>사진제출</button>
                 <button className={styles.header__profileBox__button} onClick={moveToPage}>북마크</button>
                 <span className={styles.header__profileBox__userName}>사용자</span>

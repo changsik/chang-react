@@ -175,7 +175,8 @@ const SignUp = () => {
     const user = auth.currentUser;
     console.log('user = ', user)
     try {
-      const credential = GoogleAuthProvider.credential(user.accessToken);
+      const token = await user.getIdToken();
+      const credential = GoogleAuthProvider.credential(token);
 
       await reauthenticateWithCredential(user, credential).then(() => {
         unlink(user, GoogleAuthProvider.PROVIDER_ID).then(() => {
