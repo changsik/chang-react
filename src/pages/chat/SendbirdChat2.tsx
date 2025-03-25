@@ -7,6 +7,7 @@ import '@sendbird/uikit-react/dist/index.css';
 import './App.css';
 import './test.css';
 import GroupChannelList from '@sendbird/uikit-react/GroupChannelList';
+import DraggablePopup from './DraggablePopup';
 
 const orderDetails = {
   orderNumber: 'Order #12345',
@@ -78,6 +79,12 @@ const SendbirdChat2 = () => {
                 <button style={{width:50}} onClick={()=>{
                    setShowSettings(false)   
                 }}>Close</button>
+
+                <div>
+                    <h1>React Draggable Popup Example</h1>
+                    <DraggablePopup />
+                </div>
+
               {/* <ChannelSettings
                 channelUrl={channelUrl}
                 onCloseClick={() => {
