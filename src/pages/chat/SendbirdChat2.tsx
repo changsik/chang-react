@@ -9,6 +9,7 @@ import './test.css';
 import GroupChannelList from '@sendbird/uikit-react/GroupChannelList';
 import DraggablePopup from './DraggablePopup';
 import Draggable from 'react-draggable';
+import DraggableResizablePopup from './DraggableResizablePopup';
 
 const orderDetails = {
   orderNumber: 'Order #12345',
@@ -86,6 +87,7 @@ const SendbirdChat2 = () => {
                 <div>
                     <h1>React Draggable Popup Example</h1>
                     <DraggablePopup />
+                    <DraggableResizablePopup />
                 </div>
 
               {/* <ChannelSettings
