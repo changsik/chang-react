@@ -19,11 +19,6 @@ function index() {
     const [imgData, setImgData] = useState<CardDTO>();
     const [open, setOpen] = useState<Boolean>(false)
 
-    // const  CARD_LIST = imgSelector.data.results.map((card:CardDTO) => {
-    //     return (
-    //     <Card data={card} key={card.id} handleDialog={setOpen} handleSetData={setImgData}/>
-    //     )
-    // })
 
     const CARD_LIST = useMemo(() => {
         if(imgSelector.state === "hasValue"){   // loading, hasValue
@@ -34,38 +29,8 @@ function index() {
         } else {
             return <Loading />
         }
-    }, [imgSelector])       
-
-  // const [imgUrls, setImgUrls] = useState([])
-  // const getData = async () => {
-  //   const API_URL = "https://api.unsplash.com/search/photos"
-  //   const API_KEY = "NaGqJpEQmmW-tcDsDPWRu_amyjCSyfk958xKKBNYYIQ"
-  //   const PER_PAGE = 30
-
-  //   const searchValue = "Korea";
-  //   const pageValue = 100;
-
-  //   try {
-  //     const res = await axios.get(`${API_URL}?query=${searchValue}&client_id=${API_KEY}&page=${pageValue}&per_page=${PER_PAGE}`)
-  //     console.log(res)
-  //     if(res.status === 200){
-  //       setImgUrls(res.data.results)
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-  // const cardList = imgUrls.map((card:CardDTO) => {
-  //   return (
-  //     <Card data={card} key={card.id}/>
-  //   )
-  // })
-
-  // useEffect(()=>{
-  //   getData();
-  // }, [])
-
+    }, [imgSelector])   
+    
   return (
     <div className={styles.page}>
       {/* {공통 헤더 UI 부분} */}

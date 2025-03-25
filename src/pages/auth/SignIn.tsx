@@ -3,9 +3,13 @@ import { sendbird } from "@/config/sendbirdConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SignService from "@/apis/SignService";
+import SignService from "@/apis/signService";
+import { useSetRecoilState } from "recoil";
+import { userState } from "@/recoil/atoms/userState";
 
 const SignIn = () => {
+    const setUser = useSetRecoilState(userState)
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -17,22 +21,23 @@ const SignIn = () => {
         try {
             // firebase 로그인
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            const token = await userCredential.user.getIdToken();
-            localStorage.setItem('token', token);   // 토큰 저장
+            //const token = await userCredential.user.getIdToken();
+            //localStorage.setItem('token', token);   // 토큰 저장
           
             // 로그인 후 서버에 데이터 전송 및 데이터 조회
             const response = await SignService.signIn();
-            const nickname = response.data.userName;
-            console.log(response.data);
+            const userName = await response.data.userName;
+            //console.log(response.data);
+            //setUser(response.data)
 
             // Sendbird 연결
-            connectUser(userCredential.user.uid, nickname);
+            connectUser(userCredential.user.uid, userName);
 
-            console.log('로그인 성공 !!')
-            console.log("Logged in as:", userCredential.user);
+            //console.log('로그인 성공 !!')
+            //console.log("Logged in as:", userCredential.user);
 
             // 로그인 성공시 홈으로 이동
-            //navigate('/')
+            navigate('/')
 
         } catch (error) {
           console.log('로그인 실패 !!')
@@ -73,13 +78,15 @@ const SignIn = () => {
             }
             console.log('Sendbird connected as:', user);
 
+            console.log('nickname = ', nickname)
+
             // 사용자 정보를 업데이트(선택 사항)
             sendbird.updateCurrentUserInfo(nickname, null, (response, err) => {
             if (err) {
                 console.error('Error updating user info:', err);
                 return;
             }
-                console.log('User info updated:', response);
+                console.log('Sendbird User info updated:', response);
             });
         });
     };

@@ -1,8 +1,14 @@
 import { use } from "react"
 import styles from "./CommonHeader.module.scss"
 import { useNavigate } from "react-router-dom"
+import { userState } from "@/recoil/atoms/userState"
+import { useRecoilValue } from "recoil";
+import { auth } from "@/config/firebaseConfig";
+import { signOut } from "firebase/auth";
 
 function CommonHeader() {
+    const userInfo = useRecoilValue(userState);
+
     const navigate = useNavigate()
     const moveToPage = () => {
         navigate('/bookmark')
@@ -12,6 +18,19 @@ function CommonHeader() {
         navigate('/sign-in')
     }
 
+    const onSignOut = () => {
+        logoutUser();
+    }
+
+    const logoutUser = async () => {
+        try {
+          await signOut(auth);
+          // Navigate("/login");  
+        } catch (error) {
+          console.error("로그아웃 에러 : ", error);
+        }
+      }
+
     return (
         <header className={styles.header}>
             <div className={styles.header__logoBox}>
@@ -19,10 +38,11 @@ function CommonHeader() {
                 <span className={styles.header__logoBox__title}>PhotoSplash</span>
             </div>
             <div className={styles.header__profileBox}>
-                <button className={styles.header__profileBox__button} onClick={moveToSignIn} >로그인</button>
+                {userInfo && (<span className={styles.header__profileBox__userName}>{userInfo.email}</span>)}
                 <button className={styles.header__profileBox__button}>사진제출</button>
                 <button className={styles.header__profileBox__button} onClick={moveToPage}>북마크</button>
-                <span className={styles.header__profileBox__userName}>사용자</span>
+                {!userInfo && (<button className={styles.header__profileBox__button} onClick={moveToSignIn}>로그인</button>)}
+                {userInfo && (<button className={styles.header__profileBox__button} onClick={onSignOut}>로그아웃</button>)}                
             </div>
         </header>
     )
