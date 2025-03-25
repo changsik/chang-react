@@ -8,6 +8,7 @@ import './App.css';
 import './test.css';
 import GroupChannelList from '@sendbird/uikit-react/GroupChannelList';
 import DraggablePopup from './DraggablePopup';
+import Draggable from 'react-draggable';
 
 const orderDetails = {
   orderNumber: 'Order #12345',
@@ -66,12 +67,14 @@ const SendbirdChat2 = () => {
               }}>
             </GroupChannelList>
           </div>
+          <Draggable>
           <div className="sendbird-app__conversation-wrap" style={{width:400}}>
             <GroupChannel channelUrl={channelUrl} onChatHeaderActionClick={() => {
                         setShowSettings(true)
                       }}/>
 
           </div>
+          </Draggable>
 
           {showSettings && (
             <div className="sendbird-app__settingspanel-wrap" style={{background:'#999999', width:300}}>
