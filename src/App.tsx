@@ -17,6 +17,9 @@ import { onAuthStateChanged } from "firebase/auth"
 import { userState } from "./recoil/atoms/userState"
 import { AuthProvider } from "./components/common/auth/AuthContext"
 import ProtectedRoute from "./components/common/auth/ProtectedRoute"
+import SendbirdProv from "./pages/chat/SendbirdProv"
+import CustomizedApp from "./pages/chat/CustomizedApp"
+import SendbirdChat2 from "./pages/chat/SendbirdChat2"
 
 const App = () => {
     // const setUser = useSetRecoilState(userState)
@@ -64,10 +67,13 @@ const App = () => {
                     <Route path="/sendbird" element={<SendbirdBasic/>}></Route>
                     <Route path="/sendbird/user" element={<SendbirdUser/>}></Route>
                     <Route path="/sendbird/chat" element={<SendbirdChat/>}></Route>
+                    <Route path="/sendbird/chat2" element={<SendbirdChat2/>}></Route>
+                    <Route path="/sendbird/prov" element={<SendbirdProv/>}></Route>
                     <Route path="/sign-in" element={<SignIn/>}></Route>
                     </Routes>
                 </BrowserRouter>
             </AuthProvider>  
+            
     )
 }
 
