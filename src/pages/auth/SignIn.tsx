@@ -4,9 +4,8 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SignService from "@/apis/signService";
-import { useRecoilValueLoadable, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { userState } from "@/recoil/atoms/userState";
-import { userInfo } from "@/recoil/selectors/userSelector";
 
 const SignIn = () => {
     const setUser = useSetRecoilState(userState)
