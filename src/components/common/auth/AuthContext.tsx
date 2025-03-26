@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
                 console.log('로그인 상태 :', user);
             } else {
                 setUser(null);
-                localStorage.setItem('token', null);
+                localStorage.clear()
                 console.log('로그아웃 상태');
             }
         });
