@@ -5,13 +5,13 @@ const apiClient = axios.create({
     timeout: 30000,
     headers: { // 요청 헤더
         'Content-Type': 'application/json',  
-        Authorization: `Bearer ${localStorage.getItem('token')}` //`Client-ID ${process.env.REACT_APP_UNSPLASH_ACCESS_KEY}` 
+        Authorization: `Bearer ${localStorage.getItem('token')}` 
     }
 });
 
 apiClient.interceptors.request.use(
     (config) => {
-        //config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+        config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
         return config;
     },  
     (error) => {

@@ -6,28 +6,17 @@ import SendbirdBasic from "./pages/chat/SendbirdBasic"
 import SendbirdUser from "./pages/chat/SendbirdUser"
 import SendbirdChat from "./pages/chat/SendbirdChat"
 import SignIn from "./pages/auth/SignIn"
-import { useEffect } from "react"
-import { auth } from "./config/firebaseConfig"
 import { AuthProvider } from "./components/common/auth/AuthContext"
 import ProtectedRoute from "./components/common/auth/ProtectedRoute"
 import SendbirdProv from "./pages/chat/SendbirdProv"
 import SendbirdChat2 from "./pages/chat/SendbirdChat2"
 import Chat from "./pages/chat/Chat"
 import ChatChannel from "./pages/chat/ChatChannel"
+import { RecoilRoot } from "recoil"
 
 const App = () => {
-    useEffect(() => {
-        auth.onIdTokenChanged((user) => {
-            if (user) {
-                user.getIdToken().then((idToken) => {
-                    localStorage.setItem('token', idToken);
-                    console.log("Updated ID Token:", idToken);
-                });
-            }
-        });
-    }, []);
-
     return ( 
+        <RecoilRoot>
         <AuthProvider>
             <BrowserRouter>
             <Routes>
@@ -46,7 +35,7 @@ const App = () => {
             </Routes>
             </BrowserRouter>
         </AuthProvider>  
-            
+        </RecoilRoot>    
     )
 }
 

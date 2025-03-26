@@ -1,12 +1,13 @@
 import styles from "./CommonHeader.module.scss"
 import { useNavigate } from "react-router-dom"
 import { userState } from "@/recoil/atoms/userState"
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { auth } from "@/config/firebaseConfig";
 import { signOut } from "firebase/auth";
+import { sendbird } from "@/config/sendbirdConfig";
 
 function CommonHeader() {
-    const userInfo = useRecoilValue(userState);
+    const [user] = useRecoilState(userState);
 
     const navigate = useNavigate()
     const moveToPage = () => {
@@ -24,7 +25,9 @@ function CommonHeader() {
     const logoutUser = async () => {
         try {
           await signOut(auth);
-          // Navigate("/login");  
+          sendbird.disconnect(()=>{
+            console.log('Disconnected from Sendbird');
+          });
         } catch (error) {
           console.error("로그아웃 에러 : ", error);
         }
@@ -41,12 +44,12 @@ function CommonHeader() {
                 <span className={styles.header__logoBox__title}>PhotoSplash</span>
             </div>
             <div className={styles.header__profileBox}>
-                {userInfo && (<span className={styles.header__profileBox__userName}>{userInfo.userName}</span>)}
+                {user && (<span className={styles.header__profileBox__userName}>{user.userName}</span>)}
                 <button className={styles.header__profileBox__button} onClick={moveToChat}>대화방</button>
                 <button className={styles.header__profileBox__button}>사진제출</button>
                 <button className={styles.header__profileBox__button} onClick={moveToPage}>북마크</button>
-                {!userInfo && (<button className={styles.header__profileBox__button} onClick={moveToSignIn}>로그인</button>)}
-                {userInfo && (<button className={styles.header__profileBox__button} onClick={onSignOut}>로그아웃</button>)}                
+                {!user && (<button className={styles.header__profileBox__button} onClick={moveToSignIn}>로그인</button>)}
+                {user && (<button className={styles.header__profileBox__button} onClick={onSignOut}>로그아웃</button>)}                
             </div>
         </header>
     )

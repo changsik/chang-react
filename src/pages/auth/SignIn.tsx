@@ -22,16 +22,15 @@ const SignIn = () => {
         try {
             // firebase 로그인
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            //const token = await userCredential.user.getIdToken();
-            //localStorage.setItem('token', token);   // 토큰 저장
-          
+            console.log('firebase login :', userCredential);
+
             // 로그인 후 서버에 필요한 데이터 전송
             const response = await SignService.signIn();
             setUser(response.data)
 
             // Sendbird 연결
             const userName = response.data.userName;
-            connectUser(userCredential.user.uid, userName);
+            connectSendbird(userCredential.user.uid, userName);
 
             // 로그인 성공시 홈으로 이동
             navigate('/')
@@ -67,22 +66,24 @@ const SignIn = () => {
         }
     };
 
-    const connectUser = (userId: string, nickname: string) => {
+    const connectSendbird = (userId: string, nickname: string) => {
         sendbird.connect(userId, (user, error) => {
             if (error) {
                 console.error('Sendbird connection error:', error);
                 return;
             }
-            //console.log('Sendbird connected as:', user);
+            console.log('Sendbird connected as:', user);
 
             // 사용자 정보를 업데이트(선택 사항)
-            sendbird.updateCurrentUserInfo(nickname, null, (response, err) => {
-            if (err) {
-                console.error('Error updating user info:', err);
-                return;
+            if(nickname != null && !user.nickname){
+                sendbird.updateCurrentUserInfo(nickname, null, (response, err) => {
+                    if (err) {
+                        console.error('Error updating user info:', err);
+                        return;
+                    }
+                    console.log('Sendbird User info updated:', response);
+                });
             }
-                //console.log('Sendbird User info updated:', response);
-            });
         });
     };
 
@@ -122,6 +123,8 @@ const SignIn = () => {
             </div>
             <div>
                 <button onClick={onSignIn}>로그인</button>
+                <button onClick={onSignIn}>구글 로그인</button>
+                <button onClick={onSignIn}>애플 로그인</button>
             </div>
         </div>
     )
