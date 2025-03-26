@@ -7,7 +7,7 @@ import SendbirdUser from "./pages/chat/SendbirdUser"
 import SendbirdChat from "./pages/chat/SendbirdChat"
 import SignIn from "./pages/auth/SignIn"
 import { AuthProvider } from "./components/common/auth/AuthContext"
-import ProtectedRoute from "./components/common/auth/ProtectedRoute"
+import AuthRoute from "./components/common/auth/AuthRoute"
 import SendbirdProv from "./pages/chat/SendbirdProv"
 import SendbirdChat2 from "./pages/chat/SendbirdChat2"
 import Chat from "./pages/chat/Chat"
@@ -20,10 +20,10 @@ const App = () => {
         <AuthProvider>
             <BrowserRouter>
             <Routes>
-                <Route index path="/" element={<ProtectedRoute><MainPage/></ProtectedRoute>}></Route>
-                <Route path="/search/:id" element={<ProtectedRoute><MainPage/></ProtectedRoute>}></Route>
-                <Route path="/bookmark" element={<ProtectedRoute><BookmarkPage/></ProtectedRoute>}></Route>
-                <Route path="/chat" element={<ProtectedRoute><Chat/></ProtectedRoute>}></Route>
+                <Route index path="/" element={<AuthRoute><MainPage/></AuthRoute>}></Route>
+                <Route path="/search/:id" element={<AuthRoute><MainPage/></AuthRoute>}></Route>
+                <Route path="/bookmark" element={<AuthRoute><BookmarkPage/></AuthRoute>}></Route>
+                <Route path="/chat" element={<AuthRoute><Chat/></AuthRoute>}></Route>
                 <Route path="/chat/channel" element={<ChatChannel/>}></Route>
                 <Route path="/firebase" element={<FirebaseAuth/>}></Route>
                 <Route path="/sendbird" element={<SendbirdBasic/>}></Route>
