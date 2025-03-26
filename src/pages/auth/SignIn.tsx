@@ -28,10 +28,10 @@ const SignIn = () => {
           
             // 로그인 후 서버에 필요한 데이터 전송
             const response = await SignService.signIn();
-            const userName = response.data.userName;
             setUser(response.data)
 
             // Sendbird 연결
+            const userName = response.data.userName;
             connectUser(userCredential.user.uid, userName);
 
             // 로그인 성공시 홈으로 이동
@@ -69,7 +69,7 @@ const SignIn = () => {
     };
 
     const connectUser = (userId: string, nickname: string) => {
-        sendbird.connect(userId, (_user, error) => {
+        sendbird.connect(userId, (user, error) => {
             if (error) {
                 console.error('Sendbird connection error:', error);
                 return;
@@ -77,7 +77,7 @@ const SignIn = () => {
             //console.log('Sendbird connected as:', user);
 
             // 사용자 정보를 업데이트(선택 사항)
-            sendbird.updateCurrentUserInfo(nickname, null, (_response, err) => {
+            sendbird.updateCurrentUserInfo(nickname, null, (response, err) => {
             if (err) {
                 console.error('Error updating user info:', err);
                 return;
@@ -90,12 +90,18 @@ const SignIn = () => {
     const onSignIn = (e) => {
         e.preventDefault();
         signIn(email, password);
-      }
+    }
 
     useEffect(() => {
 
     }, [])  
   
+    const handelKeydown = (e: React.KeyboardEvent) => {
+        if(e.key === "Enter"){  // Enter key
+            signIn(email, password);
+        }       
+    }
+
     return (
         <div>
             <div>
@@ -110,6 +116,7 @@ const SignIn = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={handelKeydown}
                 placeholder="Password"
                 required
                 />

@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
                 }
 
                 setUser(userData);
-                console.log('로그인 상태 :', userData);
+                console.log('로그인 상태 :', user);
             } else {
                 setUser(null);
                 localStorage.setItem('token', null);
