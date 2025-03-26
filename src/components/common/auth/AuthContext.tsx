@@ -11,15 +11,23 @@ export const AuthProvider = ({ children }) => {
       
     useEffect(() => {
           // Fetch user data and set it in Recoil state
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if(user){
-                const userData = {
-                    uid: user.uid,
-                    email: user.email,
-                    displayName: user.displayName
-                };
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+          console.log(user);
+            if(currentUser){
+                let userData = {userId:'', email:'', userName: ''};
+
+                if(user != null){
+                  userData.userId = user.userId;
+                  userData.email = user.email;
+                  userData.userName = user.userName;
+                } else {
+                  userData.userId = currentUser.uid;
+                  userData.email = currentUser.email;
+                  userData.userName = currentUser.displayName;
+                }
+
                 setUser(userData);
-                console.log('로그인 상태 :', user);
+                console.log('로그인 상태 :', userData);
             } else {
                 setUser(null);
                 localStorage.setItem('token', null);

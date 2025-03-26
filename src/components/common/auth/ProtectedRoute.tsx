@@ -8,8 +8,8 @@ const ProtectedRoute = ({ children }) => {
     const currentUser = useRecoilValue(userState);
     //const {currentUser} = useContext(AuthContext)
 
-    console.log('children = ', children);
-    console.log('currentUSer = ', currentUser);
+    //console.log('children = ', children);
+    //console.log('currentUSer = ', currentUser);
     return currentUser ? children : <Navigate to="/sign-in" />;
 };
   

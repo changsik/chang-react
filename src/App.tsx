@@ -1,9 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom"
-// import MainPage from "@pages/index"
-// import AboutPage from "@pages/about"
-
-import { RecoilRoot, useRecoilValue, useSetRecoilState } from "recoil"
-
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import MainPage from "@pages/index/index"
 import BookmarkPage from "@/pages/bookmark/index"
 import FirebaseAuth from "@/pages/auth/FirebaseAuth"
@@ -13,38 +8,12 @@ import SendbirdChat from "./pages/chat/SendbirdChat"
 import SignIn from "./pages/auth/SignIn"
 import { useEffect } from "react"
 import { auth } from "./config/firebaseConfig"
-import { onAuthStateChanged } from "firebase/auth"
-import { userState } from "./recoil/atoms/userState"
 import { AuthProvider } from "./components/common/auth/AuthContext"
 import ProtectedRoute from "./components/common/auth/ProtectedRoute"
 import SendbirdProv from "./pages/chat/SendbirdProv"
-import CustomizedApp from "./pages/chat/CustomizedApp"
 import SendbirdChat2 from "./pages/chat/SendbirdChat2"
 
 const App = () => {
-    // const setUser = useSetRecoilState(userState)
-
-    // useEffect(() => {
-    //     // Fetch user data and set it in Recoil state
-    //     const unsubscribe = onAuthStateChanged (auth, (user) => {
-    //         if(user){
-    //             setUser({
-    //                 uid: user.uid,
-    //                 email: user.email,
-    //                 displayName: user.displayName
-    //             });
-    //             console.log('로그인 상태 :', user);
-    //         } else {
-    //             setUser(null)
-    //             localStorage.setItem('token', null);
-    //             console.log('로그아웃 상태');
-    //             // navigate('/sign-in')
-    //         }
-    //     });
-
-    //     return () => unsubscribe()
-    // }, [setUser])
-
     useEffect(() => {
         auth.onIdTokenChanged((user) => {
             if (user) {

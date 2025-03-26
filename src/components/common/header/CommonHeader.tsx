@@ -1,4 +1,3 @@
-import { use } from "react"
 import styles from "./CommonHeader.module.scss"
 import { useNavigate } from "react-router-dom"
 import { userState } from "@/recoil/atoms/userState"
@@ -38,7 +37,7 @@ function CommonHeader() {
                 <span className={styles.header__logoBox__title}>PhotoSplash</span>
             </div>
             <div className={styles.header__profileBox}>
-                {userInfo && (<span className={styles.header__profileBox__userName}>{userInfo.email}</span>)}
+                {userInfo && (<span className={styles.header__profileBox__userName}>{userInfo.userName}</span>)}
                 <button className={styles.header__profileBox__button}>사진제출</button>
                 <button className={styles.header__profileBox__button} onClick={moveToPage}>북마크</button>
                 {!userInfo && (<button className={styles.header__profileBox__button} onClick={moveToSignIn}>로그인</button>)}
