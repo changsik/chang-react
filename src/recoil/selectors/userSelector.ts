@@ -5,8 +5,11 @@ export const userInfo = selector({
     key: 'userInfo',
     get: async ({ }) => {
         try {
-            const response = await signService.getUserInfo();
-            return response.data;
+            if(localStorage.getItem("token")){
+                const response = await signService.getUserInfo();
+                return response.data || {};
+            }
+            return {};
         } catch (error) {
             console.log(error);
         }
