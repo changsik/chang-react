@@ -7,9 +7,9 @@ export const userInfo = selector({
         try {
             if(localStorage.getItem("token")){
                 const response = await signService.getUserInfo();
-                return response.data || {};
+                return response.data;
             }
-            return {};
+            return null;
         } catch (error) {
             console.log(error);
         }

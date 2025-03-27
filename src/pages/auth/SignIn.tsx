@@ -6,8 +6,10 @@ import { useNavigate } from "react-router-dom";
 import SignService from "@/apis/signService";
 import { useSetRecoilState } from "recoil";
 import { userState } from "@/recoil/atoms/userState";
+import { useAuth } from "@/components/common/auth/AuthProvider";
 
 const SignIn = () => {
+    const { isAuthenticated } = useAuth();
     const setUser = useSetRecoilState(userState)
     // const userSelector = useRecoilValueLoadable(userInfo)
 
@@ -15,8 +17,7 @@ const SignIn = () => {
     const [password, setPassword] = useState("");
 
     const navigate = useNavigate();
-    //const sb = new SendBird({ appId: '3E4C38E4-4EB5-4089-AA63-72F8B96E36DA' }); // Sendbird Application ID를 입력하세요.
-
+    
     // 로그인 
     const signIn = async (email:string, password:string) => {
         try {
@@ -93,7 +94,10 @@ const SignIn = () => {
     }
 
     useEffect(() => {
-
+        console.log('isAuthenticated = ', isAuthenticated)
+        if (isAuthenticated) {
+            navigate('/')
+        }
     }, [])  
   
     const handelKeydown = (e: React.KeyboardEvent) => {
