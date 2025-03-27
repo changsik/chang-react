@@ -33,6 +33,7 @@ const App = () => {
                 <Route path="/sendbird/chat2" element={<SendbirdChat2/>}></Route>
                 <Route path="/sendbird/prov" element={<SendbirdProv/>}></Route>
                 <Route path="/sign-in" element={<PublicRoute><SignIn/></PublicRoute>}></Route>
+                <Route path="/login" element={<PublicRoute><SignIn/></PublicRoute>}></Route>
             </Routes>
             </BrowserRouter>
         </AuthProvider>  

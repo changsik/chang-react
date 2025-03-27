@@ -1,20 +1,36 @@
 import { useAuth } from "./AuthProvider";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 const PublicRoute = ({ children }) => {
     const { user, loginUser } = useAuth();
-
-    console.log('user =========', user);
-    console.log('loginUser =========', loginUser);
+    const location = useLocation()
+    // console.log('location.pathname  ==== ',location.pathname)
+    // console.log('user =========', user);
+    // console.log('loginUser =========', loginUser);
     // console.log('isAuthenticated =========', isAuthenticated);
 
     if(loginUser.contents){
         if(loginUser.state === 'hasValue'){
-            //return user ? <Navigate to="/" /> : children;
-            return children;
+            if(location.pathname === '/login'){
+                return children
+            } else if(location.pathname === '/sign-in'){
+                return <Navigate to="/" />
+            } else {
+                return <Navigate to="/" />
+            }
         }
     } else {
-        return user ? <Navigate to="/" /> : children;
+        if(user){
+            return <Navigate to="/" />
+        } else {
+            if(location.pathname === '/login'){
+                return <Navigate to="/sign-in" />
+            } else {
+                return children
+            }   
+        }
+        
+        //return user ? <Navigate to="/" /> : children;
     }
     
     // return !isAuthenticated ? children : <Navigate to="/" />
