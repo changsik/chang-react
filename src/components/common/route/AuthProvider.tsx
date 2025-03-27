@@ -8,9 +8,12 @@ import { useRecoilState, useRecoilValueLoadable } from "recoil";
 export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    // const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useRecoilState(userState)
     const loginUser = useRecoilValueLoadable(userInfo)
+
+    // const login = () => setIsAuthenticated(true);
+    // const logout = () => setIsAuthenticated(false);
     
     useEffect(() => {
         auth.onIdTokenChanged((user) => {
@@ -41,10 +44,12 @@ export const AuthProvider = ({ children }) => {
                     }
                 }
                 console.log('로그인 상태 :', user);
+                    //login();
             } else {
                 setUser(null);
                 localStorage.clear()
                 console.log('로그아웃 상태', user);
+                //logout()
             }
         });
   
@@ -52,7 +57,7 @@ export const AuthProvider = ({ children }) => {
     }, [setUser]);
   
     return (
-        <AuthContext.Provider value={{ user, loginUser, isAuthenticated, setIsAuthenticated }}>
+        <AuthContext.Provider value={{ user, loginUser }}>
             {children}
         </AuthContext.Provider>
     )

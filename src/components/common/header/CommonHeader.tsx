@@ -25,12 +25,12 @@ function CommonHeader() {
 
     const logoutUser = async () => {
         try {
-          await signOut(auth);
-          sendbird.disconnect(()=>{
-            console.log('Disconnected from Sendbird');
-          });
+            await signOut(auth);
+            sendbird.disconnect(()=>{
+                console.log('Disconnected from Sendbird');
+            });
         } catch (error) {
-          console.error("로그아웃 에러 : ", error);
+            console.error("로그아웃 에러 : ", error);
         }
     }
 

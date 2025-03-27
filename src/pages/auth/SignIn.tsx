@@ -1,17 +1,14 @@
 import { auth } from "@/config/firebaseConfig";
 import { sendbird } from "@/config/sendbirdConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SignService from "@/apis/signService";
 import { useSetRecoilState } from "recoil";
 import { userState } from "@/recoil/atoms/userState";
-import { useAuth } from "@/components/common/auth/AuthProvider";
 
 const SignIn = () => {
-    const { isAuthenticated } = useAuth();
     const setUser = useSetRecoilState(userState)
-    // const userSelector = useRecoilValueLoadable(userInfo)
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -92,13 +89,6 @@ const SignIn = () => {
         e.preventDefault();
         signIn(email, password);
     }
-
-    useEffect(() => {
-        console.log('isAuthenticated = ', isAuthenticated)
-        if (isAuthenticated) {
-            navigate('/')
-        }
-    }, [])  
   
     const handelKeydown = (e: React.KeyboardEvent) => {
         if(e.key === "Enter"){  // Enter key
