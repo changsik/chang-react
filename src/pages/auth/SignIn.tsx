@@ -1,8 +1,8 @@
 import { auth } from "@/config/firebaseConfig";
 import { sendbird } from "@/config/sendbirdConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import {  useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {  useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import SignService from "@/apis/signService";
 import { useSetRecoilState } from "recoil";
 import { userState } from "@/recoil/atoms/userState";
@@ -14,6 +14,7 @@ const SignIn = () => {
     const [password, setPassword] = useState("");
 
     const navigate = useNavigate();
+    const location = useLocation()
     
     // 로그인 
     const signIn = async (email:string, password:string) => {
@@ -95,6 +96,13 @@ const SignIn = () => {
             signIn(email, password);
         }       
     }
+
+    useEffect(() => {
+        if(location.search){
+            window.history.pushState({}, '', '/sign-in');
+        } 
+    }, []);
+    
 
     return (
         <div>

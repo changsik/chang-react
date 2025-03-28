@@ -2,7 +2,7 @@ import { auth } from "@/config/firebaseConfig";
 import { User, userState } from "@/recoil/atoms/userState";
 import { userInfo } from "@/recoil/selectors/userSelector";
 import { onAuthStateChanged } from "firebase/auth";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { useRecoilState, useRecoilValueLoadable } from "recoil";
 
 export const AuthContext = createContext(null);
@@ -20,14 +20,13 @@ export const AuthProvider = ({ children }) => {
             if (user) {
                 user.getIdToken().then((idToken) => {
                     localStorage.setItem('token', idToken);
-                    // console.log("Updated ID Token:", idToken);
                 });
             }
         });
     }, []);
 
     useEffect(() => {
-          // Fetch user data and set it in Recoil state
+        // Fetch user data and set it in Recoil state
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             if(currentUser){
                  if(!user){
@@ -44,7 +43,7 @@ export const AuthProvider = ({ children }) => {
                     }
                 }
                 console.log('로그인 상태 :', user);
-                    //login();
+                //login();
             } else {
                 setUser(null);
                 localStorage.clear()
@@ -53,7 +52,7 @@ export const AuthProvider = ({ children }) => {
             }
         });
   
-        return () => unsubscribe();     // 구독해제
+        return () => unsubscribe();
     }, [setUser]);
   
     return (

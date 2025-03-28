@@ -20,7 +20,8 @@ function CommonHeader() {
 
     const onSignOut = () => {
         logoutUser();
-        navigate('/login')
+        //navigate('/login')
+        navigate('/sign-in?action=')
     }
 
     const logoutUser = async () => {
