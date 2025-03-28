@@ -1,6 +1,6 @@
-import { auth } from "@/config/firebaseConfig";
+import { auth, googleProvider } from "@/config/firebaseConfig";
 import { sendbird } from "@/config/sendbirdConfig";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import {  useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import SignService from "@/apis/signService";
@@ -86,6 +86,24 @@ const SignIn = () => {
         });
     };
 
+    // Google 로그인 함수
+    const signInWithGoogle = async () => {
+        try {
+            // 체크
+            
+            const result = await signInWithPopup(auth, googleProvider);
+            const user = result.user;
+            console.log("User signed in:", user);
+
+            // 로그인 후 서버에 필요한 데이터 전송
+            const response = await SignService.signIn();
+            setUser(response.data)
+
+        } catch (error) {
+          console.error("Error signing in with Google:", error);
+        }
+    }  
+
     const onSignIn = (e) => {
         e.preventDefault();
         signIn(email, password);
@@ -97,13 +115,16 @@ const SignIn = () => {
         }       
     }
 
+    const onGoogleSignIn = () => {
+        signInWithGoogle();
+    };
+
     useEffect(() => {
         if(location.search){
             window.history.pushState({}, '', '/sign-in');
         } 
     }, []);
     
-
     return (
         <div>
             <div>
@@ -125,7 +146,7 @@ const SignIn = () => {
             </div>
             <div>
                 <button onClick={onSignIn}>로그인</button>
-                <button onClick={onSignIn}>구글 로그인</button>
+                <button onClick={onGoogleSignIn}>구글 로그인</button>
                 <button onClick={onSignIn}>애플 로그인</button>
             </div>
         </div>
