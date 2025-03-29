@@ -1,9 +1,9 @@
-import { auth, googleProvider } from "@/config/firebaseConfig";
+import { appleProvider, auth, googleProvider } from "@/config/firebaseConfig";
 import { sendbird } from "@/config/sendbirdConfig";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { deleteUser, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import {  useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import SignService from "@/apis/signService";
+import SignService from "@/apis/service/signService";
 import { useSetRecoilState } from "recoil";
 import { userState } from "@/recoil/atoms/userState";
 
@@ -90,17 +90,71 @@ const SignIn = () => {
     const signInWithGoogle = async () => {
         try {
             // 체크
+            // userService.checkAccount()
             
             const result = await signInWithPopup(auth, googleProvider);
             const user = result.user;
             console.log("User signed in:", user);
 
-            // 로그인 후 서버에 필요한 데이터 전송
+            // 로그인 후 서버에 필요한 데이터 전송 (계정이 존재하는지 체크)
             const response = await SignService.signIn();
             setUser(response.data)
 
+            // Sendbird 연결
+            const userName = response.data.userName;
+            connectSendbird(user.uid, userName);
+
+            // 로그인 성공시 홈으로 이동
+            navigate('/')
+
         } catch (error) {
-          console.error("Error signing in with Google:", error);
+            console.error("Error signing in with Google:", error);
+
+            if (error instanceof Error && (error as any).response?.status === 401) {
+                const user = auth.currentUser;
+                
+                // 강제 로그아웃
+                await signOut(auth);
+
+                // 계정삭제 (401 일 경우)
+                await deleteUser(user);
+            }
+        }
+    }  
+
+    // Google 로그인 함수
+    const signInWithApple = async () => {
+        try {
+            // 체크
+            // userService.checkAccount()
+            
+            const result = await signInWithPopup(auth, appleProvider);
+            const user = result.user;
+            console.log("User signed in:", user);
+
+            // 로그인 후 서버에 필요한 데이터 전송 (계정이 존재하는지 체크)
+            const response = await SignService.signIn();
+            setUser(response.data)
+
+            // Sendbird 연결
+            const userName = response.data.userName;
+            connectSendbird(user.uid, userName);
+
+            // 로그인 성공시 홈으로 이동
+            navigate('/')
+
+        } catch (error) {
+            console.error("Error signing in with Google:", error);
+
+            if (error instanceof Error && (error as any).response?.status === 401) {
+                const user = auth.currentUser;
+                
+                // 강제 로그아웃
+                await signOut(auth);
+
+                // 계정삭제 (401 일 경우)
+                await deleteUser(user);
+            }
         }
     }  
 
@@ -117,6 +171,10 @@ const SignIn = () => {
 
     const onGoogleSignIn = () => {
         signInWithGoogle();
+    };
+
+    const onAppleSignIn = () => {
+        signInWithApple();
     };
 
     useEffect(() => {
@@ -147,7 +205,7 @@ const SignIn = () => {
             <div>
                 <button onClick={onSignIn}>로그인</button>
                 <button onClick={onGoogleSignIn}>구글 로그인</button>
-                <button onClick={onSignIn}>애플 로그인</button>
+                <button onClick={onAppleSignIn}>애플 로그인</button>
             </div>
         </div>
     )

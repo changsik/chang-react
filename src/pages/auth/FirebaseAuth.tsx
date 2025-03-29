@@ -1,5 +1,5 @@
 import { auth, googleProvider } from "@config/firebaseConfig";
-import { createUserWithEmailAndPassword, deleteUser, EmailAuthProvider, GoogleAuthProvider, onAuthStateChanged, reauthenticateWithCredential, signInWithEmailAndPassword, signInWithPopup, signOut, unlink } from "firebase/auth";
+import { createUserWithEmailAndPassword, deleteUser, EmailAuthProvider, GoogleAuthProvider, onAuthStateChanged, reauthenticateWithCredential, signInWithEmailAndPassword, signInWithPopup, signOut, unlink, fetchSignInMethodsForEmail } from "firebase/auth";
 import { useState } from "react";
 
 const SignUp = () => {
@@ -163,9 +163,48 @@ const SignUp = () => {
   const signInWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
-      console.log("User signed in:", user);
+      console.log("User signed in:", result); // user.accessToken, user.uid
+
+      // const user = result.user;
+      // if(user){
+      //   const token = user.accessToken;
+      //   const response = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${token}`);
+      //   const userInfo = await response.json();
+      //   console.log('userInfo', userInfo);
+      // }
       // 추가적인 사용자 데이터 처리 가능 (예: Firestore에 저장)
+    } catch (error) {
+      console.error("Error signing in with Google:", error);
+    }
+  }
+
+  const handleGoogleSignIn2 = () => {
+    googleSignIn();
+  };
+
+  const checkIfPasswordAccountExists = async (email : string) => {
+    try {
+      const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+      console.log('signInMethods = ',signInMethods)
+      return signInMethods.includes(EmailAuthProvider.PROVIDER_ID);
+    } catch (error) {
+      console.error('Error checking user existence:', error);
+      return false;
+    }
+  };
+
+  // 패스워드방식 이메일 체크
+  const googleSignIn = async () => {
+    try {
+      const email = 'kcsic2000@gmail.com'; // 사용자의 이메일 주소를 입력하세요
+      const passwordAccountExists = await checkIfPasswordAccountExists(email);
+      console.log('passwordAccountExists = ', passwordAccountExists);
+      if(passwordAccountExists){
+        alert('account exists!!');
+      } else {
+        const result = await signInWithPopup(auth, googleProvider);
+        console.log("User signed in:", result); // user.accessToken, user.uid
+      }
     } catch (error) {
       console.error("Error signing in with Google:", error);
     }
@@ -242,6 +281,7 @@ const SignUp = () => {
         <button onClick={handleToken}>토큰 재발급</button>
         <br/><br/>
         <button onClick={handleGoogleSignIn}>Google 회원가입/로그인</button>
+        <button onClick={handleGoogleSignIn2}>Google 로그인/이메일 체크</button>
         <button onClick={deleteGoogleUserAccount}>Google 회원탈퇴</button>
       </div>
     </div>

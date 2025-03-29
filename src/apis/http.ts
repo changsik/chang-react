@@ -5,13 +5,16 @@ const apiClient = axios.create({
     timeout: 30000,
     headers: { // 요청 헤더
         'Content-Type': 'application/json',  
-        Authorization: `Bearer ${localStorage.getItem('token')}` 
+        'Channel': 'web'
+        //Authorization: `Bearer ${localStorage.getItem('token')}` 
     }
 });
 
 apiClient.interceptors.request.use(
     (config) => {
-        config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+        if(localStorage.getItem('token')){
+            config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+        }
         return config;
     },  
     (error) => {

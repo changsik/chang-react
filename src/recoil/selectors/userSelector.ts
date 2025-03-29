@@ -1,5 +1,5 @@
 import { selector } from 'recoil';
-import signService from '@/apis/signService';
+import signService from '@/apis/service/signService';
 
 export const userInfo = selector({
     key: 'userInfo',
