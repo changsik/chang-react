@@ -14,6 +14,7 @@ import Chat from "./pages/chat/Chat"
 import ChatChannel from "./pages/chat/ChatChannel"
 import { RecoilRoot } from "recoil"
 import PublicRoute from "./components/common/route/PublicRoute"
+import SignUp from "./pages/auth/SignUp"
 
 const App = () => {
     return ( 
@@ -33,6 +34,7 @@ const App = () => {
                 <Route path="/sendbird/chat2" element={<SendbirdChat2/>}></Route>
                 <Route path="/sendbird/prov" element={<SendbirdProv/>}></Route>
                 <Route path="/sign-in" element={<PublicRoute><SignIn/></PublicRoute>}></Route>
+                <Route path="/sign-up" element={<PublicRoute><SignUp/></PublicRoute>}></Route>
             </Routes>
             </BrowserRouter>
         </AuthProvider>  

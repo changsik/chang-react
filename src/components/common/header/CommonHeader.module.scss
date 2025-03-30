@@ -1,4 +1,5 @@
 .header {
+    // background-color: #e7e5e5;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -39,21 +40,37 @@
         width: 40%;
 
         &__button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            outline: none;
-            cursor: pointer;
-
-            padding: 6px 10px;
-
-            border: 1px solid $color-white-300;
+            width: 100%;
+            padding: 10px;
+            border: none;
             border-radius: 4px;
-
-            color: $color-white-600;
-            background-color: $color-white-000;
+            background-color: #256aff;
+            color: white;
+            cursor: pointer;
+            margin-bottom: 10px;
+    
+            &:hover { 
+                transition: background-color 0.2s;
+                background-color: #0f50e1;
+            }
         }
+
+        // &__button {
+        //     display: flex;
+        //     align-items: center;
+        //     justify-content: center;
+
+        //     outline: none;
+        //     cursor: pointer;
+
+        //     padding: 6px 10px;
+
+        //     border: 1px solid $color-white-300;
+        //     border-radius: 4px;
+
+        //     color: $color-white-600;
+        //     background-color: $color-white-000;
+        // }
         &__userName {
             color: $color-white-600;
             font-weight: 400;

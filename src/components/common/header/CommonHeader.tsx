@@ -47,7 +47,7 @@ function CommonHeader() {
             </div>
             <div className={styles.header__profileBox}>
                 {user && (<span className={styles.header__profileBox__userName}>{user.userName}</span>)}
-                <button className={styles.header__profileBox__button} onClick={moveToChat}>대화방</button>
+                <button className={styles.header__profileBox__button} onClick={moveToChat}>SendBird</button>
                 <button className={styles.header__profileBox__button}>사진제출</button>
                 <button className={styles.header__profileBox__button} onClick={moveToPage}>북마크</button>
                 {!user && (<button className={styles.header__profileBox__button} onClick={moveToSignIn}>로그인</button>)}

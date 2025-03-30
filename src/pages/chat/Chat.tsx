@@ -6,15 +6,41 @@ import DraggablePopup from "./DraggablePopup"
 import DraggableResizablePopup from "./DraggableResizablePopup"
 
 import '@sendbird/uikit-react/dist/index.css';
-import { sbAppId } from "@/config/sendbirdConfig"
+import { sbAppId, sendbird } from "@/config/sendbirdConfig"
 import { userState } from "@/recoil/atoms/userState"
 import { useRecoilValue } from "recoil"
+
+// import styles from './styles/Chat.module.scss'
+import {} from './App.css'
 
 const Chat = () => {    
     const user = useRecoilValue(userState)
 
     const [channelUrl, setChannelUrl] = useState('');
     const [showSettings, setShowSettings] = useState(false);
+
+    const sendFileMessage = (channelUrl, fileUrl) => {
+        sendbird.GroupChannel.getChannel(channelUrl, (channel, error) => {
+          if (error) {
+            console.error('Error getting channel:', error);
+            return;
+          }
+      
+          const params = new sendbird.FileMessageParams();
+          params.fileUrl = fileUrl;
+          params.fileName = 'uploaded_file';
+          params.fileSize = 12345; // 파일 크기
+          params.mimeType = 'image/jpeg'; // MIME 타입
+      
+          channel.sendFileMessage(params, (message, error) => {
+            if (error) {
+              console.error('Error sending file message:', error);
+            } else {
+              console.log('File message sent:', message);
+            }
+          });
+        });
+      };
 
     return (
         <div className="app-container">
@@ -24,12 +50,16 @@ const Chat = () => {
                     onChannelCreated={(channel) => {
                         setChannelUrl(channel.url)
                     }}
-                    onChannelSelect={(channel) => {                       
-                        setChannelUrl(channel?.url)
-                        localStorage.setItem('channcel.url', channel?.url)
-                        window.open('/chat/channel', "_blank", "width=400,height=600")
-                        
-                    }}>
+                    onChannelSelect={(channel) => { 
+                        console.log(channel)                      
+                        if(channel){
+                            setChannelUrl(channel?.url)
+                            localStorage.setItem('channcel.url', channel?.url)
+                            window.open('/chat/channel', "_blank", "width=400,height=600")        
+                        }
+                    }} 
+                    disableAutoSelect={true} >
+                    
                 </GroupChannelList>
             </div>  
             <div className="sendbird-app__conversation-wrap" style={{width:400}}>  

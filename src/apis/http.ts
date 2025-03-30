@@ -5,7 +5,8 @@ const apiClient = axios.create({
     timeout: 30000,
     headers: { // 요청 헤더
         'Content-Type': 'application/json',  
-        'Channel': 'web'
+        'Channel': 'web',
+        "X-Requested-With": "XMLHttpRequest"
         //Authorization: `Bearer ${localStorage.getItem('token')}` 
     }
 });

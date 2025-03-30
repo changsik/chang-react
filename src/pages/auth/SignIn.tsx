@@ -7,6 +7,8 @@ import SignService from "@/apis/service/signService";
 import { useSetRecoilState } from "recoil";
 import { userState } from "@/recoil/atoms/userState";
 
+import styles from "./styles/SignIn.module.scss";
+
 const SignIn = () => {
     const setUser = useSetRecoilState(userState)
 
@@ -24,7 +26,7 @@ const SignIn = () => {
             console.log('firebase login :', userCredential);
 
             // 로그인 후 서버에 필요한 데이터 전송
-            const response = await SignService.signIn();
+            const response = await SignService.signIn('password');
             setUser(response.data)
 
             // Sendbird 연결
@@ -88,16 +90,13 @@ const SignIn = () => {
 
     // Google 로그인 함수
     const signInWithGoogle = async () => {
-        try {
-            // 체크
-            // userService.checkAccount()
-            
+        try {            
             const result = await signInWithPopup(auth, googleProvider);
             const user = result.user;
             console.log("User signed in:", user);
 
             // 로그인 후 서버에 필요한 데이터 전송 (계정이 존재하는지 체크)
-            const response = await SignService.signIn();
+            const response = await SignService.signIn('google');
             setUser(response.data)
 
             // Sendbird 연결
@@ -122,18 +121,15 @@ const SignIn = () => {
         }
     }  
 
-    // Google 로그인 함수
+    // Apple 로그인
     const signInWithApple = async () => {
-        try {
-            // 체크
-            // userService.checkAccount()
-            
+        try {            
             const result = await signInWithPopup(auth, appleProvider);
             const user = result.user;
             console.log("User signed in:", user);
 
             // 로그인 후 서버에 필요한 데이터 전송 (계정이 존재하는지 체크)
-            const response = await SignService.signIn();
+            const response = await SignService.signIn('apple');
             setUser(response.data)
 
             // Sendbird 연결
@@ -158,17 +154,22 @@ const SignIn = () => {
         }
     }  
 
-    const onSignIn = (e) => {
-        e.preventDefault();
-        signIn(email, password);
-    }
-  
     const handelKeydown = (e: React.KeyboardEvent) => {
         if(e.key === "Enter"){  // Enter key
             signIn(email, password);
         }       
     }
 
+    const onSignUp = (e) => {
+        e.preventDefault();
+        navigate('/sign-up')
+    }
+
+    const onSignIn = (e) => {
+        e.preventDefault();
+        signIn(email, password);
+    }
+  
     const onGoogleSignIn = () => {
         signInWithGoogle();
     };
@@ -184,14 +185,15 @@ const SignIn = () => {
     }, []);
     
     return (
-        <div>
-            <div>
+        <div className={styles.page}>
+            <div className={styles.page__login}>
                 <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
                 required
+                className={styles.page__login__input}
                 />
                 <input
                 type="password"
@@ -200,12 +202,14 @@ const SignIn = () => {
                 onKeyDown={handelKeydown}
                 placeholder="Password"
                 required
+                className={styles.page__login__input}
                 />
             </div>
             <div>
-                <button onClick={onSignIn}>로그인</button>
-                <button onClick={onGoogleSignIn}>구글 로그인</button>
-                <button onClick={onAppleSignIn}>애플 로그인</button>
+                <button onClick={onSignIn} className={styles.page__button}>로그인</button>
+                <button onClick={onGoogleSignIn} className={styles.page__button}>구글 로그인</button>
+                <button onClick={onAppleSignIn} className={styles.page__button}>애플 로그인</button>
+                <button onClick={onSignUp} className={styles.page__button}>회원가입</button>
             </div>
         </div>
     )

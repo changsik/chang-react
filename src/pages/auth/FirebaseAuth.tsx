@@ -2,7 +2,7 @@ import { auth, googleProvider } from "@config/firebaseConfig";
 import { createUserWithEmailAndPassword, deleteUser, EmailAuthProvider, GoogleAuthProvider, onAuthStateChanged, reauthenticateWithCredential, signInWithEmailAndPassword, signInWithPopup, signOut, unlink, fetchSignInMethodsForEmail } from "firebase/auth";
 import { useState } from "react";
 
-const SignUp = () => {
+const FirebaseAuth = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -288,4 +288,4 @@ const SignUp = () => {
   )
 }
 
-export default SignUp
+export default FirebaseAuth
