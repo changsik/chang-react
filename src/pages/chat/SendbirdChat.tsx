@@ -4,7 +4,7 @@ import {useSendbirdStateContext} from '@sendbird/uikit-react';
 import {GroupChannel} from '@sendbird/uikit-react/GroupChannel';
 import SendbirdProvider from '@sendbird/uikit-react/SendbirdProvider';
 import '@sendbird/uikit-react/dist/index.css';
-import './App.css';
+//import './App.css';
 
 const orderDetails = {
   orderNumber: 'Order #12345',

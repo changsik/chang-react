@@ -1,4 +1,4 @@
-import './App.css'
+//import './App.css'
 
 import SBProvider from '@sendbird/uikit-react/SendbirdProvider'
 import '@sendbird/uikit-react/dist/index.css'
