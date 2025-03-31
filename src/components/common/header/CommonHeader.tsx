@@ -4,7 +4,6 @@ import { userState } from "@/recoil/atoms/userState"
 import { useRecoilState } from "recoil";
 import { auth } from "@/config/firebaseConfig";
 import { signOut } from "firebase/auth";
-import { sendbird } from "@/config/sendbirdConfig";
 
 function CommonHeader() {
     const [user] = useRecoilState(userState);
@@ -20,16 +19,15 @@ function CommonHeader() {
 
     const onSignOut = () => {
         logoutUser();
-        //navigate('/login')
-        navigate('/sign-in?action=')
+        // navigate('/sign-in?action=')
     }
 
     const logoutUser = async () => {
         try {
             await signOut(auth);
-            sendbird.disconnect(()=>{
-                console.log('Disconnected from Sendbird');
-            });
+            // sendbird.disconnect(()=>{
+            //     console.log('Disconnected from Sendbird');
+            // });
         } catch (error) {
             console.error("로그아웃 에러 : ", error);
         }

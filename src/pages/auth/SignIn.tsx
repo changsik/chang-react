@@ -182,6 +182,8 @@ const SignIn = () => {
         if(location.search){
             window.history.pushState({}, '', '/sign-in');
         } 
+        setEmail("kcsic2000@gmail.com")       
+        setPassword("kcsic20!") 
     }, []);
     
     return (

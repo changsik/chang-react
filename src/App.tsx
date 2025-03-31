@@ -45,13 +45,13 @@ const MainApp = () => {
 
 const App = () => {
     return (
-    <RecoilRoot>
-    <AuthProvider>
-        <BrowserRouter>
-            <MainApp />
-        </BrowserRouter>
-    </AuthProvider>
-    </RecoilRoot>
+        <RecoilRoot>
+            <BrowserRouter>
+                <AuthProvider>
+                    <MainApp />
+                </AuthProvider>
+            </BrowserRouter>
+        </RecoilRoot>
     )  
 }
 
