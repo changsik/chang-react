@@ -16,6 +16,8 @@ import { RecoilRoot } from "recoil"
 import PublicRoute from "./components/common/route/PublicRoute"
 import SignUp from "./pages/auth/SignUp"
 import CommonHeader from "./components/common/header/CommonHeader"
+import React from "react"
+import Loading from "./pages/index/components/Loading"
 
 const MainApp = () => {
     const location = useLocation()
@@ -46,11 +48,13 @@ const MainApp = () => {
 const App = () => {
     return (
         <RecoilRoot>
-            <BrowserRouter>
-                <AuthProvider>
-                    <MainApp />
-                </AuthProvider>
-            </BrowserRouter>
+            {/* <React.Suspense fallback={<Loading />}> */}
+                <BrowserRouter>
+                    <AuthProvider>
+                        <MainApp />
+                    </AuthProvider>
+                </BrowserRouter>
+            {/* </React.Suspense> */}
         </RecoilRoot>
     )  
 }
