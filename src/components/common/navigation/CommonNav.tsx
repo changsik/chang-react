@@ -15,33 +15,33 @@ interface Navigation {
 }
 
 function CommonNav() {
-  const location = useLocation()
-  const [navigation, setNavigation] = useState<Navigation[]>(navJson)
-  const [page, setPage] = useRecoilState(pageState)
-  const [search, setSearch] = useRecoilState(searchState)
+    const location = useLocation()
+    const [navigation, setNavigation] = useState<Navigation[]>(navJson)
+    const [page, setPage] = useRecoilState(pageState)
+    const [search, setSearch] = useRecoilState(searchState)
 
-  useEffect(() => {
-    navigation.forEach((nav:Navigation) => {
-      nav.isActive = false;
+    useEffect(() => {
+        navigation.forEach((nav:Navigation) => {
+            nav.isActive = false;
 
-      if(nav.path === location.pathname || location.pathname.includes(nav.path)){
-        nav.isActive = true;
-        setSearch(nav.searchValue)
-        setPage(1)
-      }
-    })
-    setNavigation([...navigation]) 
-  }, [location.pathname])
+            if(nav.path === location.pathname || location.pathname.includes(nav.path)){
+                nav.isActive = true;
+                setSearch(nav.searchValue)
+                setPage(1)
+            }
+        })
+        setNavigation([...navigation]) 
+    }, [location.pathname])
 
-  const navLinks = navigation.map(( item : Navigation) => {
-    return (
-      <Link to={item.path} className={item.isActive ? `${styles.navigation__menu} ${styles.active}`
+    const navLinks = navigation.map(( item : Navigation) => {
+        return (
+            <Link to={item.path} className={item.isActive ? `${styles.navigation__menu} ${styles.active}`
                                                     : `${styles.navigation__menu} ${styles.inactive}`}  key={item.path}>
-        <span className={styles.navigation__menu__label}>{item.label}</span>
-      </Link>
-    )
-  })
-  return <nav className={styles.navigation}>{navLinks}</nav>
+                <span className={styles.navigation__menu__label}>{item.label}</span>
+            </Link>
+        )
+    })
+    return <nav className={styles.navigation}>{navLinks}</nav>
 }
 
 export default CommonNav

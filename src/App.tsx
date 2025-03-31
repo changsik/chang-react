@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"
 import MainPage from "@pages/index/index"
 import BookmarkPage from "@/pages/bookmark/index"
 import FirebaseAuth from "@/pages/auth/FirebaseAuth"
@@ -15,12 +15,15 @@ import ChatChannel from "./pages/chat/ChatChannel"
 import { RecoilRoot } from "recoil"
 import PublicRoute from "./components/common/route/PublicRoute"
 import SignUp from "./pages/auth/SignUp"
+import CommonHeader from "./components/common/header/CommonHeader"
 
-const App = () => {
-    return ( 
-        <RecoilRoot>
-        <AuthProvider>
-            <BrowserRouter>
+const MainApp = () => {
+    const location = useLocation()
+    const noHeaderRoutes = ['/sign-in']
+
+    return (     
+        <div>
+            { !noHeaderRoutes.includes(location.pathname) && (<><CommonHeader/></>)}
             <Routes>
                 <Route index path="/" element={<AuthRoute><MainPage/></AuthRoute>}></Route>
                 <Route path="/search/:id" element={<AuthRoute><MainPage/></AuthRoute>}></Route>
@@ -36,10 +39,20 @@ const App = () => {
                 <Route path="/sign-in" element={<PublicRoute><SignIn/></PublicRoute>}></Route>
                 <Route path="/sign-up" element={<PublicRoute><SignUp/></PublicRoute>}></Route>
             </Routes>
-            </BrowserRouter>
-        </AuthProvider>  
-        </RecoilRoot>    
+        </div>
     )
+}
+
+const App = () => {
+    return (
+    <RecoilRoot>
+    <AuthProvider>
+        <BrowserRouter>
+            <MainApp />
+        </BrowserRouter>
+    </AuthProvider>
+    </RecoilRoot>
+    )  
 }
 
 export default App

@@ -34,7 +34,7 @@ function index() {
   return (
     <div className={styles.page}>
       {/* {공통 헤더 UI 부분} */}
-      <CommonHeader/>
+      {/* <CommonHeader/> */}
 
       {/* {공통 네비게이션 UI 부분} */}
       <CommonNav/>
