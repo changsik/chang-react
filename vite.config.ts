@@ -1,6 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { fileURLToPath, URL } from 'url'
+// import * as dotenv from 'dotenv';
+// dotenv.config();
+
+console.log('VITE_PORT:', process.env.VITE_PORT);
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -24,5 +28,8 @@ export default defineConfig({
             additionalData: `@use "@/assets/styles/main.scss" as *;`,
         },
     },
-  }
+  },
+  server: {
+    port: parseInt(process.env.VITE_PORT || '8100'), // 환경 변수 활용
+  },
 })

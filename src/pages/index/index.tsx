@@ -1,4 +1,3 @@
-import CommonHeader from "@/components/common/header/CommonHeader"
 import CommonSearchBar from "@/components/common/searchBar/CommonSearchBar"
 import CommonNav from "@/components/common/navigation/CommonNav"
 import CommonFooter from "@/components/common/footer/CommonFooter"
