@@ -1,14 +1,14 @@
 import { useRecoilState } from 'recoil';
 import styles from './Pagination.module.scss'
-import { currentPageState, itemsPerPageState, pageStepState } from '@/recoil/atoms/pageState';
+import { pageSizeState, pageState, pageStepState, paginationState } from '@/recoil/atoms/pageState';
 
 const Pagination = () => {
-    const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
-    const [itemsPerPage, setItemsPerPage] =  useRecoilState(itemsPerPageState);
+    // const [page, setPage] = useRecoilState(pageState);
+    // const [pageSize, setPageSize] =  useRecoilState(pageSizeState);
     const [pageStep, setPageStep] =  useRecoilState(pageStepState);
+    const [pagination, setPagination] = useRecoilState(paginationState({ page: 1, pageSize: 15 }));
 
-
-
+    
 
     return (
         <div className={styles.page}>

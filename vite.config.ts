@@ -30,6 +30,6 @@ export default defineConfig({
     },
   },
   server: {
-    port: parseInt(process.env.VITE_PORT || '8100'), // 환경 변수 활용
+    port: parseInt(process.env.VITE_PORT || '7100'), // 환경 변수 활용
   },
 })
