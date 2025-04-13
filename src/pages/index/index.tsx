@@ -6,29 +6,45 @@ import Card from "./components/Card"
 import styles from "./styles/index.module.scss"
 import { CardDTO } from "./types/Card"
 import { useRecoilValueLoadable } from "recoil"
-import { imageData } from "@recoil/selectors/imageSelector"
+import { imageData2 } from "@recoil/selectors/imageSelector2"
 import DetailDialog from "@components/common/dialog/DetailDialog"
 import { useMemo, useState } from "react"
 import Loading from "./components/Loading"
+import Pagination from "@/components/common/pagination/Pagination"
+import { paginationSelector } from "@/recoil/selectors/pageSelector"
 
 function index() {
 
     //const imgSelector = useRecoilValue (imageData)
-    const imgSelector = useRecoilValueLoadable(imageData)
+    //const imgSelector = useRecoilValueLoadable(imageData2)
     const [imgData, setImgData] = useState<CardDTO>();
     const [open, setOpen] = useState<Boolean>(false)
 
 
+    const paginationData = useRecoilValueLoadable(paginationSelector({ id: "notice" }))
+    const totPage = 100;
+
     const CARD_LIST = useMemo(() => {
-        if(imgSelector.state === "hasValue"){   // loading, hasValue
-            const result = imgSelector.contents.results.map((card:CardDTO) => {
+        if(paginationData.state === "hasValue"){   // loading, hasValue
+            const result = paginationData.contents.results.map((card:CardDTO) => {
                 return <Card data={card} key={card.id} handleDialog={setOpen} handleSetData={setImgData}/>
             })
             return result;
         } else {
             return <Loading />
         }
-    }, [imgSelector])   
+    }, [paginationData]) 
+    
+  //   const CARD_LIST = useMemo(() => {
+  //     if(imgSelector.state === "hasValue"){   // loading, hasValue
+  //         const result = imgSelector.contents.results.map((card:CardDTO) => {
+  //             return <Card data={card} key={card.id} handleDialog={setOpen} handleSetData={setImgData}/>
+  //         })
+  //         return result;
+  //     } else {
+  //         return <Loading />
+  //     }
+  // }, [imgSelector]) 
     
   return (
     <div className={styles.page}>
@@ -54,7 +70,8 @@ function index() {
       </div>
 
       {/* 공통 푸터 UI 부분 */}
-      <CommonFooter />
+      {/* <CommonFooter /> */}
+      <Pagination id="notice" />
 
       {open && <DetailDialog data={imgData} handleDialog={setOpen}/>}
     </div>

@@ -18,10 +18,18 @@ export const pageStepState = atom<number>({
     default: 10,
 });
 
-export const paginationState = atomFamily<{ page?: number; pageSize?: number }, { page: number; pageSize: number }>({
+// export const paginationState = atomFamily<{ page?: number; pageSize?: number }, { page: number; pageSize: number }>({
+//     key: 'paginationState',
+//     default: (params) => ({
+//         page: params.page || 1, 
+//         pageSize: params.pageSize || 15
+//     })
+// });
+
+export const paginationState = atomFamily({
     key: 'paginationState',
-    default: (params) => ({
-        page: params.page || 1, 
-        pageSize: params.pageSize || 15
-    })
+    default: (params: any) => ({
+        page: params.page || 1,
+        pageSize: params.pageSize || 10
+    }),
 });
